@@ -25,11 +25,13 @@ def download_url(url,filename):
         f.write(data)
 
 path = 'Yoga-82/Yoga-82/yoga_dataset_links'
-dataset_path = os.path.join('Yoga-82/Yoga-82','dataset')
+dataset_path = os.path.join('Yoga-82','dataset')
 if not os.path.isdir(dataset_path):
     os.mkdir(dataset_path)
 
+
 classes = os.listdir(path)
+failed = []
 for file in classes:
     counter= 0
     folder_name = file.split(".")[0]
@@ -48,3 +50,11 @@ for file in classes:
             if url_exists(url):
                 download_url(url,filename)
                 counter = counter + 1
+            else:
+                print('dont worry added to the list')
+                failed.append([folder_name,url])
+
+
+import pandas as pd
+df = pd.DataFrame(lst)
+df.to_csv('failed.csv')
